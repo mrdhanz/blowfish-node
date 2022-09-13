@@ -1,9 +1,8 @@
 # Blowfish
 
-[![npm package][npm-badge]][npm] [![Travis][build-badge]][build]
+[![npm package][npm-badge]][npm]
 
 [build-badge]: https://img.shields.io/travis/com/mrdhanz/blowfish-node/master.svg?style=flat-square
-[build]: https://travis-ci.com/mrdhanz/blowfish-node
 
 [npm-badge]: https://img.shields.io/npm/v/blowfish-node.svg?style=flat-square
 [npm]: https://www.npmjs.org/package/blowfish-node
@@ -23,10 +22,14 @@ Works in Node.js 4+, IE10+ and all modern browsers.
 
 ## Installation
 
-Take latest version [here](https://unpkg.com/blowfish-node) or with npm:
-
-```
+Take latest version [here](https://unpkg.com/blowfish-node) or with:
+### npm
+```sh
 npm install blowfish-node --save
+```
+### yarn:
+```sh
+yarn add blowfish-node
 ```
 
 ## Usage
@@ -43,6 +46,17 @@ bf.setIv('abcdefgh'); // optional for ECB mode; bytes length should be equal 8
 
 const encoded = bf.encode('input text even with emoji 🎅');
 const decoded = bf.decode(encoded, Blowfish.TYPE.STRING); // type is optional
+```
+
+```ts
+import { BlowfishEncodeB64, BlowfishDecodeB64 } from "blowfish-node";
+// encode the object to base64
+const encoded = BlowfishEncodeB64(
+  "super key",
+  JSON.stringtify({ message: "hello world" })
+);
+// decode with transform the object
+const decoded = BlowfishDecodeB64<Object>(encoded); 
 ```
 
 You can play with this example in runkit: https://runkit.com/egoroof/blowfish-example
