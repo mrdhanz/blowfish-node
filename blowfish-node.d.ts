@@ -35,3 +35,7 @@ export default class Blowfish {
   decode(data: string | Uint8Array, type: TYPE.STRING): string;
   decode(data: string | Uint8Array, type?: TYPE.UINT8_ARRAY): Uint8Array;
 }
+
+export function BlowfishDecodeB64<T = any, R = T>(secretKey: string, encValue: string | Uint8Array): R
+
+export function BlowfishEncodeB64(secretKey: string, value: string | Uint8Array): string

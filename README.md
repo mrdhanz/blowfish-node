@@ -2,11 +2,11 @@
 
 [![npm package][npm-badge]][npm] [![Travis][build-badge]][build]
 
-[build-badge]: https://img.shields.io/travis/com/egoroof/blowfish/master.svg?style=flat-square
-[build]: https://travis-ci.com/egoroof/blowfish
+[build-badge]: https://img.shields.io/travis/com/mrdhanz/blowfish-node/master.svg?style=flat-square
+[build]: https://travis-ci.com/mrdhanz/blowfish-node
 
-[npm-badge]: https://img.shields.io/npm/v/egoroof-blowfish.svg?style=flat-square
-[npm]: https://www.npmjs.org/package/egoroof-blowfish
+[npm-badge]: https://img.shields.io/npm/v/blowfish-node.svg?style=flat-square
+[npm]: https://www.npmjs.org/package/blowfish-node
 
 [Blowfish](https://en.wikipedia.org/wiki/Blowfish_(cipher)) encryption library for browsers and Node.js.
 
@@ -23,10 +23,10 @@ Works in Node.js 4+, IE10+ and all modern browsers.
 
 ## Installation
 
-Take latest version [here](https://unpkg.com/egoroof-blowfish) or with npm:
+Take latest version [here](https://unpkg.com/blowfish-node) or with npm:
 
 ```
-npm install egoroof-blowfish --save
+npm install blowfish-node --save
 ```
 
 ## Usage
@@ -37,7 +37,7 @@ Strings support all unicode including emoji ✨.
 ### Example
 
 ```js
-const Blowfish = require('egoroof-blowfish');
+const Blowfish = require('blowfish-node');
 const bf = new Blowfish('super key', Blowfish.MODE.ECB, Blowfish.PADDING.NULL); // only key isn't optional
 bf.setIv('abcdefgh'); // optional for ECB mode; bytes length should be equal 8
 
