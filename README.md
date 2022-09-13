@@ -46,20 +46,15 @@ bf.setIv('abcdefgh'); // optional for ECB mode; bytes length should be equal 8
 
 const encoded = bf.encode('input text even with emoji 🎅');
 const decoded = bf.decode(encoded, Blowfish.TYPE.STRING); // type is optional
-```
 
-```ts
-import { BlowfishEncodeB64, BlowfishDecodeB64 } from "blowfish-node";
 // encode the object to base64
-const encoded = BlowfishEncodeB64(
-  "super key",
-  JSON.stringtify({ message: "hello world" })
-);
-// decode with transform the object
-const decoded = BlowfishDecodeB64<Object>(encoded); 
+const encoded = bf.encodeToBase64(JSON.stringify({message: 'super secret response api'}));
+const decoded = bf.decode(encoded, Blowfish.TYPE.JSON_OBJECT); // type is required to JSON_OBJECT
+// only for typescript
+const response = bf.decode<{message: string}>(encoded, Blowfish.TYPE.JSON_OBJECT); // type is required to JSON_OBJECT
 ```
 
-You can play with this example in runkit: https://runkit.com/egoroof/blowfish-example
+You can play with this example in runkit: https://runkit.com/mrdhanz/blowfish-example
 
 ### Block cipher mode of operation
 
@@ -89,4 +84,5 @@ Which type of data should return method `decode`:
 ```js
 Blowfish.TYPE.STRING // (default) String
 Blowfish.TYPE.UINT8_ARRAY // Uint8Array
+Blowfish.TYPE.JSON_OBJECT // JSON
 ```

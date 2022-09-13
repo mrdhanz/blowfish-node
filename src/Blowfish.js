@@ -12,7 +12,7 @@ import {
   sumMod32,
   base64DecToArr,
 } from './helpers';
-import { u8ToString } from './encoding';
+import { u8ToJSON, u8ToString } from './encoding';
 
 export default class Blowfish {
   static get MODE() {
@@ -95,6 +95,33 @@ export default class Blowfish {
     }
   }
 
+  encodeToBase64(data) {
+    return this.encodeToBuffer(data).toString('base64');
+  }
+
+  encodeToBuffer(data) {
+    return Buffer.from(this.encode(data));
+  }
+
+  _decodeB64(data) {
+    const val =
+    data.length > 32 && typeof data === 'string'
+        ? base64DecToArr(data)
+        : data;
+    const result = this.decode(val);
+    if (typeof result === 'object') {
+      return result;
+    }
+    if (
+      typeof result === 'string' &&
+      ((result[0] === '{' && result[result.length - 1] === '}') ||
+        (result[0] === '[' && result[result.length - 1] === ']'))
+    ) {
+      return JSON.parse(result);
+    }
+    return result;
+  }
+
   decode(data, returnType = TYPE.STRING) {
     if (!isStringOrBuffer(data)) {
       throw new Error(
@@ -104,8 +131,11 @@ export default class Blowfish {
     if (this.mode !== MODE.ECB && !this.iv) {
       throw new Error('IV is not set');
     }
-    data = toUint8Array(data);
-
+    if(returnType === TYPE.JSON_OBJECT){
+        data = base64DecToArr(data);
+    } else {
+        data = toUint8Array(data);
+    }
     if (data.length % 8 !== 0) {
       throw new Error('Decoded data should be multiple of 8 bytes');
     }
@@ -129,6 +159,9 @@ export default class Blowfish {
       }
       case TYPE.STRING: {
         return u8ToString(data);
+      }
+      case TYPE.JSON_OBJECT: {
+        return u8ToJSON(data);
       }
       default: {
         throw new Error('Unsupported return type');
@@ -249,29 +282,4 @@ export default class Blowfish {
     }
     return decoded;
   }
-}
-
-export function BlowfishDecodeB64(secretKey, encValue) {
-  const bf = new Blowfish(secretKey);
-  const val =
-    encValue.length > 100 && typeof encValue === 'string'
-      ? base64DecToArr(encValue)
-      : encValue;
-  const result = bf.decode(val);
-  if (typeof result === 'object') {
-    return result;
-  }
-  if (
-    typeof result === 'string' &&
-    ((result[0] === '{' && result[result.length - 1] === '}') ||
-      (result[0] === '[' && result[result.length - 1] === ']'))
-  ) {
-    return JSON.parse(result);
-  }
-  return result;
-}
-
-export function BlowfishEncodeB64(secretKey, value) {
-  const bf = new Blowfish(secretKey);
-  return Buffer.from(bf.encode(value)).toString('base64');
 }

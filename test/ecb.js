@@ -98,4 +98,20 @@ describe('ecb', () => {
         assert.deepStrictEqual(encoded, encodedText);
         assert.deepStrictEqual(decoded, defaultText);
     });
+    it('JSON_OBJECT', () => {
+        const obj = {
+            status: true,
+            code: 200,
+            message: 'Berhasil mengambil data user',
+            instance: '/api/v1/user/session'
+        };
+        const encodedText = '4IxJ56R2g9oRtmEi2G4X8IZlfBLltLhugXJrPbf3XKwRKTrdN+Nsr9WG2g9xBaoI+glSgiPaYGrIrbMCgRrauRMEZFwLwykGsqoRn4IbqmFeBeFcZFfVAyCwdYWBVjZu9erj9vjtWlY=';
+        
+        const bf = new Blowfish('SUPER_SECRET_KEY');
+        const encoded = bf.encodeToBase64(JSON.stringify(obj));
+
+        const decoded = bf.decode(encoded, Blowfish.TYPE.JSON_OBJECT);
+        assert.deepStrictEqual(encoded, encodedText);
+        assert.deepStrictEqual(decoded, obj);
+    });
 });

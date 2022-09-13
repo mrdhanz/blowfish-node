@@ -13,7 +13,8 @@ export const PADDING = {
 
 export const TYPE = {
     STRING: 0,
-    UINT8_ARRAY: 1
+    UINT8_ARRAY: 1,
+    JSON_OBJECT: 2
 };
 
 export const P = [

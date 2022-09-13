@@ -144,5 +144,5 @@ describe('cbc', () => {
 
         assert.deepStrictEqual(encoded, encodedText);
         assert.deepStrictEqual(decoded, defaultText);
-    });
+    });    
 });

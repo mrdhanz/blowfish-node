@@ -14,6 +14,7 @@ export enum PADDING {
 export enum TYPE {
   STRING = 0,
   UINT8_ARRAY = 1,
+  JSON_OBJECT = 2,
 }
 
 export default class Blowfish {
@@ -31,11 +32,10 @@ export default class Blowfish {
   setIv(iv: string | Uint8Array): void;
 
   encode(data: string | Uint8Array): Uint8Array;
+  encodeToBase64(data: string | Uint8Array): string;
+  encodeToBuffer(data: string | Uint8Array): Buffer;
 
   decode(data: string | Uint8Array, type: TYPE.STRING): string;
   decode(data: string | Uint8Array, type?: TYPE.UINT8_ARRAY): Uint8Array;
+  decode<T = any, R = T>(data: string | Uint8Array, type?: TYPE.JSON_OBJECT): R;
 }
-
-export function BlowfishDecodeB64<T = any, R = T>(secretKey: string, encValue: string | Uint8Array): R
-
-export function BlowfishEncodeB64(secretKey: string, value: string | Uint8Array): string

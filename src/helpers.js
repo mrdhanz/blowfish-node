@@ -34,6 +34,10 @@ export function isBuffer(val) {
   return typeof val === 'object' && 'byteLength' in val;
 }
 
+export function isU8Array(val) {
+  return val instanceof Uint8Array;
+}
+
 export function isStringOrBuffer(val) {
   return isString(val) || isBuffer(val);
 }
@@ -53,6 +57,8 @@ export function toUint8Array(val) {
     return stringToU8(val);
   } else if (isBuffer(val)) {
     return new Uint8Array(val);
+  } else if (isU8Array(val)) {
+    return val;
   }
   throw new Error('Unsupported type');
 }
