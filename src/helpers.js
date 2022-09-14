@@ -370,3 +370,27 @@ export function strToUTF8Arr(sDOMStr) {
 
   return aBytes;
 }
+
+export function autoFixJSON(str) {
+  try {
+    return JSON.parse(str);
+  } catch (e) {
+    try {
+      let jsonFix = str
+        .replace(
+          /(\w+:)|(\w+ :)/g,
+          (match) => `"${match.substring(0, match.length - 1)}":`
+        )
+        .replace(/'/g, '"');
+      if (jsonFix[0].charCodeAt(0) === 125) {
+        jsonFix = jsonFix.slice(0, 1);
+      }
+      if (jsonFix[jsonFix.length - 2].charCodeAt(0) === 125) {
+        jsonFix = `${jsonFix.slice(0, -2)}}`;
+      }
+      return JSON.parse(jsonFix);
+    } catch (error) {
+      throw new Error('Invalid JSON');
+    }
+  }
+}

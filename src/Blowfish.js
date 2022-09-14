@@ -11,6 +11,7 @@ import {
   unpad,
   sumMod32,
   base64DecToArr,
+  isU8Array,
 } from './helpers';
 import { u8ToJSON, u8ToString } from './encoding';
 
@@ -131,7 +132,7 @@ export default class Blowfish {
     if (this.mode !== MODE.ECB && !this.iv) {
       throw new Error('IV is not set');
     }
-    if(returnType === TYPE.JSON_OBJECT){
+    if(returnType === TYPE.JSON_OBJECT && !isU8Array(data)){
         data = base64DecToArr(data);
     } else {
         data = toUint8Array(data);

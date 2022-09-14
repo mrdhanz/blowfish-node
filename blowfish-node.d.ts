@@ -37,5 +37,5 @@ export default class Blowfish {
 
   decode(data: string | Uint8Array, type: TYPE.STRING): string;
   decode(data: string | Uint8Array, type?: TYPE.UINT8_ARRAY): Uint8Array;
-  decode<T = any, R = T>(data: string | Uint8Array, type?: TYPE.JSON_OBJECT): R;
+  decode<T = any, R = T>(data: string | Uint8Array, type: TYPE.JSON_OBJECT): R;
 }

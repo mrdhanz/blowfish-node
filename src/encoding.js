@@ -1,3 +1,5 @@
+import { autoFixJSON } from "./helpers";
+
 // https://gist.github.com/pascaldekloe/62546103a1576803dade9269ccf76330
 export function stringToU8(s) {
   const bytes = new Uint8Array(s.length * 4);
@@ -88,13 +90,5 @@ export function u8ToString(bytes) {
 }
 
 export function u8ToJSON(bytes) {
-  const s = u8ToString(bytes);
-  if (
-    typeof s === 'string' &&
-    ((s[0] === '{' && s[s.length - 1] === '}') ||
-      (s[0] === '[' && s[s.length - 1] === ']'))
-  ) {
-    return JSON.parse(s);
-  } 
-  throw new Error('Cannot parse JSON!');
+  return autoFixJSON(u8ToString(bytes));
 }
