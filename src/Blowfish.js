@@ -12,6 +12,7 @@ import {
   sumMod32,
   base64DecToArr,
   isU8Array,
+  isBrowser,
 } from './helpers';
 import { u8ToJSON, u8ToString } from './encoding';
 
@@ -96,12 +97,19 @@ export default class Blowfish {
     }
   }
 
-  encodeToBase64(data) {
-    return this.encodeToBuffer(data).toString('base64');
+  bytesToBase64(bytes) {
+    const binString = Array.from(bytes, (x) => String.fromCodePoint(x)).join('');
+    return btoa(binString);
   }
 
-  encodeToBuffer(data) {
-    return Buffer.from(this.encode(data));
+  encodeToBase64(data) {
+    const encoded = this.encode(data);
+
+    if (isBrowser()) {
+      return this.bytesToBase64(Uint8Array.from(encoded));
+    }
+
+    return Buffer.from(encoded).toString('base64');
   }
 
   _decodeB64(data) {
