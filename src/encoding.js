@@ -1,4 +1,4 @@
-import { autoFixJSON } from "./helpers";
+import { autoFixJSON } from './helpers';
 
 // https://gist.github.com/pascaldekloe/62546103a1576803dade9269ccf76330
 export function stringToU8(s) {
